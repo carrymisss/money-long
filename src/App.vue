@@ -12,7 +12,6 @@
 import Header from './components/Header.vue';
 import Content from './components/Content.vue';
 
-
 export default {
    name: 'App',
    components: {
@@ -21,8 +20,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
    .c-page {
-      min-height: 100vh;
+      min-height: 100vh !important;
+   }
+   #vueg-background {
+      width: auto !important;
    }
 </style>

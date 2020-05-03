@@ -10,7 +10,9 @@
   "dependencies": {
     "animate.css": "^3.7.2",
     "ant-design-vue": "^1.4.12",
+    "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "dotenv": "^8.2.0",
     "es6-promise": "^4.2.8",
     "vue": "^2.6.11",
     "vue-parent-change-transition": "^1.0.0",

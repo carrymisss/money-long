@@ -5,31 +5,31 @@
 		leave-active-class="animated fadeOut faster delay-1s"> -->
 		<a-row type="flex" justify="center" align="middle">
 			<a-col span="18">
-				<a-list v-if="markedCurrency.length > 0" class="c-marked-currency" itemLayout="horizontal" :dataSource="markedCurrency" bordered>
+				<a-list v-if="this.$store.state.markered.length > 0" class="c-marked-currency" itemLayout="horizontal" :dataSource="this.$store.state.markered" bordered>
 					<a-list-item class="item-marked" slot="renderItem" slot-scope="item, index">
-						<a-button @click="unMarkCurrency(index)" class="btn-marked" slot="actions" type="danger" style="{color: '#000'}" shape="circle"><i class="fas fa-bookmark"></i></a-button>
+						<a-button @click="unMarkCurrency(index)" class="btn-marked" slot="actions" type="danger" shape="circle"><i class="fas fa-bookmark"></i></a-button>
 						<a-list-item-meta>
-							<span slot="title">{{item.title}}</span>
-							<a-avatar
-							slot="avatar"
-							src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-							/>
+							<span slot="title">
+								{{item[0]}}
+								<a-badge class="c-base-badge" v-if="item[2]" count="base" />
+							</span>
+							<a-avatar slot="avatar" :src="`./flags/${item[0]}.png`" />
 						</a-list-item-meta>
-						<span class="c-currency__value">content</span>
+						<span class="c-currency__value">{{ item[1] | currency(item[0]) }}</span>
 					</a-list-item>
 				</a-list>
 
-				<a-list v-if="currency.length > 0" class="c-currency-list" itemLayout="horizontal" :dataSource="currency" bordered>
+				<a-list class="c-currency-list" itemLayout="horizontal" :dataSource="this.$store.state.currency" bordered :loading="this.$store.state.loading">
 					<a-list-item slot="renderItem" slot-scope="item, index" >
 						<a-button @click="MarkCurrency(index)" slot="actions" type="danger" shape="circle" class="btn-notmarked"><i class="fas fa-bookmark"></i></a-button>
 						<a-list-item-meta>
-							<span slot="title">{{item.title}}</span>
-							<a-avatar
-							slot="avatar"
-							src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-							/>
+							<span slot="title">
+								{{item[0]}}
+								<a-badge class="c-base-badge" v-if="item[2]" count="base" />
+							</span>
+							<a-avatar slot="avatar" :src="`./flags/${item[0]}.png`" />
 						</a-list-item-meta>
-						<span class="c-currency__value">content</span>
+						<span class="c-currency__value">{{ item[1] | currency(item[0]) }}</span>
 					</a-list-item>
 				</a-list>
 			</a-col>
@@ -42,53 +42,30 @@ import { List, Row, Col, Button } from 'ant-design-vue';
 
 /* eslint-disable */
 
-const currency = [
-	{
-		id: 0,
-		title: 'Ant Design Title 1',
-	},
-	{
-		id: 1,
-		title: 'Ant Design Title 2',
-	},
-	{
-		id: 2,
-		title: 'Ant Design Title 3',
-	},
-	{
-		id: 3,
-		title: 'Ant Design Title 4',
-	},
-];
-
-const markedCurrency = [];
-
 export default {
 	data() {
 		return {
-			currency,
-			isMarked: false,
-			markedCurrency
+
 		}
 	},
 	methods: {
 		MarkCurrency(index) {
-			this.$data.markedCurrency.push(this.$data.currency[index]);
-			this.$data.currency.splice(index, 1);
-			if (this.$data.markedCurrency) {
-				this.$data.markedCurrency.sort(function (a, b) {
-				  return a.id - b.id;
-				});
-			}
+			// this.$data.markedCurrency.push(this.$data.currency[index]);
+			// this.$data.currency.splice(index, 1);
+			// if (this.$data.markedCurrency) {
+			// 	this.$data.markedCurrency.sort(function (a, b) {
+			// 	  return a.id - b.id;
+			// 	});
+			// }
 		},
 		unMarkCurrency(index) {
-			this.$data.currency.push(this.$data.markedCurrency[index]);
-			this.$data.markedCurrency.splice(index, 1);
-			if (this.$data.currency) {
-				this.$data.currency.sort(function (a, b) {
-				  return a.id - b.id;
-				});
-			}
+		// 	this.$data.currency.push(this.$data.markedCurrency[index]);
+		// 	this.$data.markedCurrency.splice(index, 1);
+		// 	if (this.$data.currency) {
+		// 		this.$data.currency.sort(function (a, b) {
+		// 		  return a.id - b.id;
+		// 		});
+		// 	}
 		}
 	},
 	components: {
@@ -98,6 +75,14 @@ export default {
 </script>
 
 <style>
+	.ant-list-item-meta-title span {
+		display: -webkit-flex;
+		display: -ms-flex;
+		display: flex;
+		-ms-align-items: center;
+		align-items: center;
+		text-align: center;
+	}
 	.ant-list-item-action li {
 		display: -webkit-inline-flex;
 		display: -ms-inline-flex;
@@ -114,6 +99,14 @@ export default {
 	.ant-list-item-content {
 		justify-content: center !important;
 	}
+	.c-base-badge {
+		margin-left: 10px;
+	}
+	.c-marked-currency .c-base-badge sup {
+		background-color: #FF6E4E;
+		-webkit-box-shadow: 0 0 0 1px #CEFF9D;
+		box-shadow: 0 0 0 1px #CEFF9D;
+	}
 	.c-currency__value {
 		font-size: 18px;
 	}
@@ -121,13 +114,13 @@ export default {
 		border-color: #fff;
 	}
 	.c-marked-currency.ant-list-bordered {
-		border-color: #ffec3da6;
+		border-color: #CEFF9D;
 	}
 	.c-marked-currency.ant-list-bordered .ant-list-item {
 		border-color: #434343;
 	}
 	.item-marked {
-		background-color: #ffec3da6;
+		background-color: #CEFF9D;
 	}
 	.btn-marked {
 		position: relative;

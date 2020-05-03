@@ -12,9 +12,9 @@ export default {
 
 		}
 	},
-	// components: {
-	// 		'a-col': Col, 'a-row': Row
-  // },
+	async mounted() {
+		await this.$store.dispatch('applyCurrency');
+	}
 }
 </script>
 
