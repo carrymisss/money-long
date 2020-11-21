@@ -1,7 +1,8 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
-import 'es6-promise/auto';
-Vue.use(VueRouter);
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import 'es6-promise/auto'
+
+Vue.use(VueRouter)
 
 const routes = [
 	{
@@ -24,10 +25,10 @@ const routes = [
 			PbtnHeaderColor: 'primary',
 		}
 	}
-];
+]
 
 export default new VueRouter({
 	routes,
 	mode: 'history',
 	base: '/'
-});
+})

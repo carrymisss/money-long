@@ -5,31 +5,31 @@
 		leave-active-class="animated fadeOut faster delay-1s"> -->
 		<a-row type="flex" justify="center" align="middle">
 			<a-col span="18">
-				<a-list v-if="this.$store.state.markered.length > 0" class="c-marked-currency" itemLayout="horizontal" :dataSource="this.$store.state.markered" bordered>
+				<a-list v-if="getMarkeredLength > 0" class="c-marked-currency" itemLayout="horizontal" :dataSource="getMarkered" bordered>
 					<a-list-item class="item-marked" slot="renderItem" slot-scope="item, index">
 						<a-button @click="unMarkCurrency(index)" class="btn-marked" slot="actions" type="danger" shape="circle"><i class="fas fa-bookmark"></i></a-button>
 						<a-list-item-meta>
 							<span slot="title">
-								{{item[0]}}
+								{{ item[0] }}
 								<a-badge class="c-base-badge" v-if="item[2]" count="base" />
 							</span>
-							<a-avatar slot="avatar" :src="`./flags/${item[0]}.png`" />
+							<a-avatar class="flag-avatar" slot="avatar" :src="`./flags/${item[0]}.png`" />
 						</a-list-item-meta>
-						<span class="c-currency__value">{{ item[1] | currency(item[0]) }}</span>
+						<span class="c-currency__value">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: item[0] }).format(item[1]) }}</span>
 					</a-list-item>
 				</a-list>
 
-				<a-list class="c-currency-list" itemLayout="horizontal" :dataSource="this.$store.state.currency" bordered :loading="this.$store.state.loading">
+				<a-list class="c-currency-list" itemLayout="horizontal" :dataSource="getCurrency" bordered :loading="getLoading">
 					<a-list-item slot="renderItem" slot-scope="item, index" >
 						<a-button @click="MarkCurrency(index)" slot="actions" type="danger" shape="circle" class="btn-notmarked"><i class="fas fa-bookmark"></i></a-button>
 						<a-list-item-meta>
 							<span slot="title">
-								{{item[0]}}
+								{{ item[0] }}
 								<a-badge class="c-base-badge" v-if="item[2]" count="base" />
 							</span>
-							<a-avatar slot="avatar" :src="`./flags/${item[0]}.png`" />
+							<a-avatar class="flag-avatar" slot="avatar" :src="`./flags/${item[0]}.png`" />
 						</a-list-item-meta>
-						<span class="c-currency__value">{{ item[1] | currency(item[0]) }}</span>
+						<span class="c-currency__value">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: item[0] }).format(item[1]) }}</span>
 					</a-list-item>
 				</a-list>
 			</a-col>
@@ -38,7 +38,8 @@
 </template>
 
 <script>
-import { List, Row, Col, Button } from 'ant-design-vue';
+import { List, Row, Col, Button } from 'ant-design-vue'
+import { mapGetters } from 'vuex'
 
 /* eslint-disable */
 
@@ -48,23 +49,26 @@ export default {
 
 		}
 	},
+	computed: {
+		...mapGetters(['getCurrency', 'getMarkered', 'getLoading', 'getMarkeredLength']),
+	},
 	methods: {
 		MarkCurrency(index) {
-			// this.$data.markedCurrency.push(this.$data.currency[index]);
-			// this.$data.currency.splice(index, 1);
+			// this.$data.markedCurrency.push(this.$data.currency[index])
+			// this.$data.currency.splice(index, 1)
 			// if (this.$data.markedCurrency) {
 			// 	this.$data.markedCurrency.sort(function (a, b) {
-			// 	  return a.id - b.id;
-			// 	});
+			// 	  return a.id - b.id
+			// 	})
 			// }
 		},
 		unMarkCurrency(index) {
-		// 	this.$data.currency.push(this.$data.markedCurrency[index]);
-		// 	this.$data.markedCurrency.splice(index, 1);
+		// 	this.$data.currency.push(this.$data.markedCurrency[index])
+		// 	this.$data.markedCurrency.splice(index, 1)
 		// 	if (this.$data.currency) {
 		// 		this.$data.currency.sort(function (a, b) {
-		// 		  return a.id - b.id;
-		// 		});
+		// 		  return a.id - b.id
+		// 		})
 		// 	}
 		}
 	},
@@ -75,6 +79,9 @@ export default {
 </script>
 
 <style>
+	.flag-avatar {
+		box-shadow: 0 0 10px -4px #292929;
+	}
 	.ant-list-item-meta-title span {
 		display: -webkit-flex;
 		display: -ms-flex;
