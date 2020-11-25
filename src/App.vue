@@ -15,12 +15,12 @@ export default {
    components: {
       'c-header': Header,
    },
-   data() {
-      return {
-
-      }
-   },
    beforeMount() {
+      // if (localStorage.length <= 1) {
+      //    this.$store.dispatch('applyCurrency')
+      // } else {
+      //    this.$store.dispatch('setFromStorage')
+      // }
       this.$store.dispatch('applyCurrency')
    }
 }
@@ -28,6 +28,7 @@ export default {
 
 <style>
    .c-page {
+      height: 100vh;
       min-height: 100vh !important;
    }
    #vueg-background {
@@ -35,7 +36,10 @@ export default {
    }
    .c-content {
 		width: 100%;
+      height: 100%;
+      overflow-y: auto;
 		max-width: 1140px;
+      /* min-width: 1140px; */
 		margin-left: auto !important;
 		margin-right: auto !important;
 		margin-top: 24px;

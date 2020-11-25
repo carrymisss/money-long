@@ -10,8 +10,8 @@ const routes = [
 		name: 'home',
 		component: () => import('./components/AllCurrency.vue'),
 		meta: {
-			PbtnHeaderText: 'Конвертер',
-			PbtnHeaderIcon: 'dollar',
+			PbtnHeaderText: 'Всі валюти',
+			PbtnHeaderIcon: 'project',
 			PbtnHeaderColor: 'danger',
 		}
 	},
@@ -19,9 +19,10 @@ const routes = [
 		path: '/convert',
 		name: 'converter',
 		component: () => import('./components/Converter.vue'),
+		
 		meta: {
-			PbtnHeaderText: 'Всі валюти',
-			PbtnHeaderIcon: 'project',
+			PbtnHeaderText: 'Конвертер',
+			PbtnHeaderIcon: 'dollar',
 			PbtnHeaderColor: 'primary',
 		}
 	}

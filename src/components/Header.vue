@@ -2,20 +2,16 @@
 	<a-layout-header  class="c-header">
 		<div class="c-header__wrapper">
 			<a-row type="flex" justify="space-between" align="middle">
-				<a-col>
-					<!-- <a-button :type="btnHeaderColor" :loading="this.$store.state.loading" :icon="btnHeaderIcon" size="large" @click="toPath">
-						{{ btnHeaderText }}
-					</a-button> -->
-					<a-button v-if="(this.$route.path === '/')" type="danger" :loading="this.$store.state.loading" icon="dollar" size="large" @click="toPath">
-						Конвертер
-					</a-button>
-					<a-button v-else type="primary" :loading="this.$store.state.loading" icon="project" size="large" @click="toPath">
-						Всі валюти
-					</a-button>
-				</a-col>
-				<a-col v-if="(this.$route.path === '/')">
-					<Configuration />
-				</a-col>
+				<a-space>
+					<a-col>
+						<a-button :type="btnHeaderColor" :loading="getLoading" :icon="btnHeaderIcon" size="large" @click="toPath">
+							{{ btnHeaderText }}
+						</a-button>
+					</a-col>
+					<a-col style="margin-right: auto;" v-if="(this.$route.path === '/')">
+						<Configuration />
+					</a-col>
+				</a-space>
 				<a-col class="d-flex">
 					<a-avatar shape="square" size="large" icon="user" />
 				</a-col>
@@ -25,41 +21,43 @@
 </template>
 
 <script>
-import { Button, Row, Col } from 'ant-design-vue';
-import Configuration from './Configuration.vue';
+import { Button, Row, Col, Space } from 'ant-design-vue'
+import Configuration from './Configuration.vue'
+import { mapGetters } from 'vuex'
 
 export default {
 	data() {
 		return {
-			// btnHeaderText: ' ',
-			// btnHeaderIcon: '',
-			// btnHeaderColor: 'default',
+			btnHeaderText: null,
+			btnHeaderIcon: '',
+			btnHeaderColor: 'default',
 		}
 	},
-	mounted() {
-		// setTimeout(() => {
-		// 	this.$data.btnHeaderText = this.$route.meta.PbtnHeaderText;
-		// 	this.$data.btnHeaderIcon = this.$route.meta.PbtnHeaderIcon;
-		// 	this.$data.btnHeaderColor = this.$route.meta.PbtnHeaderColor;
-		// }, 300)
+	computed: {
+		...mapGetters(['getLoading']),
+	},
+	updated() {
+		if (this.$route.path === '/') {
+			this.btnHeaderText = 'Всі валюти'
+			this.btnHeaderIcon = 'unordered-list'
+			this.btnHeaderColor = 'primary'
+		} else {
+			this.btnHeaderText = 'Конвертер'
+			this.btnHeaderIcon = 'dollar'
+			this.btnHeaderColor = 'danger'
+		}
 	},
 	methods: {
 		toPath() {
 			if (this.$route.path === '/') {
-				this.$router.push({ path: '/convert' });
-				// this.$data.btnHeaderText = 'Всі валюти';
-				// this.$data.btnHeaderIcon = 'project';
-				// this.$data.btnHeaderColor = 'primary';
+				this.$router.push({ path: '/convert' })
 			} else {
-				this.$router.push({ path: '/' });
-				// this.$data.btnHeaderText = 'Конвертер';
-				// this.$data.btnHeaderIcon = 'dollar';
-				// this.$data.btnHeaderColor = 'danger';
+				this.$router.push({ path: '/' })
 			}
 		}
 	},
 	components: {
-		'a-button': Button, 'a-row': Row, 'a-col': Col, Configuration
+		'a-button': Button, 'a-row': Row, 'a-col': Col, 'a-space': Space, Configuration
   }
 }
 </script>
@@ -74,8 +72,10 @@ export default {
 		background-color: #fff;
 	}
 	.c-header__wrapper {
+		padding: 0 15px;
 		width: 100%;
 		max-width: 1140px;
+		/* min-width: 1140px; */
 		margin-left: auto !important;
 		margin-right: auto !important;
 	}

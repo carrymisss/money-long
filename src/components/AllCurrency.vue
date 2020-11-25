@@ -1,84 +1,96 @@
 <template>
-	<!-- <transition
-		name="custom-classes-transition"
-		enter-active-class="animated fadeIn faster delay-1s"
-		leave-active-class="animated fadeOut faster delay-1s"> -->
-		<a-row type="flex" justify="center" align="middle">
-			<a-col span="18">
-				<a-list v-if="getMarkeredLength > 0" class="c-marked-currency" itemLayout="horizontal" :dataSource="getMarkered" bordered>
-					<a-list-item class="item-marked" slot="renderItem" slot-scope="item, index">
-						<a-button @click="unMarkCurrency(index)" class="btn-marked" slot="actions" type="danger" shape="circle"><i class="fas fa-bookmark"></i></a-button>
-						<a-list-item-meta>
-							<span slot="title">
-								{{ item[0] }}
-								<a-badge class="c-base-badge" v-if="item[2]" count="base" />
-							</span>
-							<a-avatar class="flag-avatar" slot="avatar" :src="`./flags/${item[0]}.png`" />
-						</a-list-item-meta>
-						<span class="c-currency__value">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: item[0] }).format(item[1]) }}</span>
-					</a-list-item>
-				</a-list>
+	<a-row type="flex" justify="center" align="middle">
+		<a-col span="18">
+			<a-alert v-if="getMarkeredLength > 0" type="warning" class="c-marked-currency">
+				<template slot="description">
+					<a-list itemLayout="horizontal" :dataSource="getMarkered" :loading="getLoading" bordered>
+						<a-list-item class="item-marked" slot="renderItem" slot-scope="item">
+							<a-button @click="unMarkCurrency(item[0])" class="btn-marked" slot="actions" type="danger" shape="circle"><i class="fas fa-bookmark"></i></a-button>
+							<a-list-item-meta>
+								<span slot="title">
+									{{ item[0] }}								
+									<a-popover placement="right" :title="new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name' }).format(item[1]).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name' }).format(item[1]).split(' ').slice(1).join(' ').slice(1)">
+										<span slot="content">
+											<b>Валюта в країнах:</b> {{ gac(item[0]) }}<br/>
+										</span>
+										<i class="far fa-question-circle iuiui"></i>
+									</a-popover>
+									<a-badge class="c-base-badge" v-if="item[2]" count="base" />
+								</span>
+								<a-avatar class="flag-avatar" slot="avatar" :src="`./flags/${item[0]}.png`" />
+							</a-list-item-meta>
+							<span class="c-currency__value">{{ new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0] }).format(item[1]) }}</span>
+						</a-list-item>
+					</a-list>
+				</template>
+			</a-alert>
 
-				<a-list class="c-currency-list" itemLayout="horizontal" :dataSource="getCurrency" bordered :loading="getLoading">
-					<a-list-item slot="renderItem" slot-scope="item, index" >
-						<a-button @click="MarkCurrency(index)" slot="actions" type="danger" shape="circle" class="btn-notmarked"><i class="fas fa-bookmark"></i></a-button>
-						<a-list-item-meta>
-							<span slot="title">
-								{{ item[0] }}
-								<a-badge class="c-base-badge" v-if="item[2]" count="base" />
-							</span>
-							<a-avatar class="flag-avatar" slot="avatar" :src="`./flags/${item[0]}.png`" />
-						</a-list-item-meta>
-						<span class="c-currency__value">{{ new Intl.NumberFormat('ru-RU', { style: 'currency', currency: item[0] }).format(item[1]) }}</span>
-					</a-list-item>
-				</a-list>
-			</a-col>
-		</a-row>
-	<!-- </transition> -->
+			<a-list v-if="getCurrencyLength > 0" class="c-currency-list" itemLayout="horizontal" :dataSource="getCurrency" bordered :loading="getLoading">
+				<a-list-item slot="renderItem" slot-scope="item" >
+					<a-button @click="MarkCurrency(item[0])" slot="actions" type="danger" shape="circle" class="btn-notmarked"><i class="fas fa-bookmark"></i></a-button>
+					<a-list-item-meta>
+						<span slot="title">
+							{{ item[0] }}								
+							<a-popover placement="right" :title="new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name' }).format(item[1]).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name' }).format(item[1]).split(' ').slice(1).join(' ').slice(1)">
+								<span slot="content">
+									<b>Валюта в країнах:</b> {{ gac(item[0]) }}<br/>
+								</span>
+								<i class="far fa-question-circle iuiui"></i>
+							</a-popover>
+							<a-badge class="c-base-badge" v-if="item[2]" count="base" />
+						</span>
+						<a-avatar class="flag-avatar" slot="avatar" :src="`./flags/${item[0]}.png`" />
+					</a-list-item-meta>
+					<span class="c-currency__value">{{ new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0] }).format(item[1]) }}</span>
+				</a-list-item>
+			</a-list>
+		</a-col>
+	</a-row>
 </template>
 
 <script>
-import { List, Row, Col, Button } from 'ant-design-vue'
+import { List, Row, Col, Button, Popover, Divider, Alert } from 'ant-design-vue'
 import { mapGetters } from 'vuex'
+import { getAllCountriesByCurrencyOrSymbol } from 'iso-country-currency'
 
 /* eslint-disable */
 
 export default {
-	data() {
-		return {
-
-		}
-	},
 	computed: {
-		...mapGetters(['getCurrency', 'getMarkered', 'getLoading', 'getMarkeredLength']),
+		...mapGetters(['getCurrency', 'getMarkered', 'getLoading', 'getMarkeredLength', 'getCurrencyLength']),
 	},
 	methods: {
+		gac(code) {
+			return getAllCountriesByCurrencyOrSymbol('currency', code).join(', ')
+		},
 		MarkCurrency(index) {
-			// this.$data.markedCurrency.push(this.$data.currency[index])
-			// this.$data.currency.splice(index, 1)
-			// if (this.$data.markedCurrency) {
-			// 	this.$data.markedCurrency.sort(function (a, b) {
-			// 	  return a.id - b.id
-			// 	})
-			// }
+			this.$store.commit('setMarkered', index)
 		},
 		unMarkCurrency(index) {
-		// 	this.$data.currency.push(this.$data.markedCurrency[index])
-		// 	this.$data.markedCurrency.splice(index, 1)
-		// 	if (this.$data.currency) {
-		// 		this.$data.currency.sort(function (a, b) {
-		// 		  return a.id - b.id
-		// 		})
-		// 	}
+			this.$store.commit('setUnMarkered', index)
 		}
 	},
 	components: {
-		'a-list': List, 'a-row': Row, 'a-col': Col, 'a-button': Button
+		'a-list': List, 'a-row': Row, 'a-col': Col, 'a-button': Button, 'a-popover': Popover, 'a-divider': Divider, 'a-alert': Alert
 	}
 }
 </script>
 
 <style>
+	.fade-enter-active, .fade-leave-active {
+		transition: opacity .5s;
+	}
+	.fade-enter, .fade-leave-to {
+		opacity: 0;
+	}
+	.ant-popover {
+		max-width: 400px;
+	}
+	.iuiui {
+		margin-left: 2px;
+		font-size: 12px;
+		cursor: help;
+	}
 	.flag-avatar {
 		box-shadow: 0 0 10px -4px #292929;
 	}
@@ -109,25 +121,22 @@ export default {
 	.c-base-badge {
 		margin-left: 10px;
 	}
-	.c-marked-currency .c-base-badge sup {
-		background-color: #FF6E4E;
-		-webkit-box-shadow: 0 0 0 1px #CEFF9D;
-		box-shadow: 0 0 0 1px #CEFF9D;
+	.c-marked-currency {
+		margin-bottom: 20px;
+		padding: 0 !important;
+	}
+	.c-marked-currency .ant-list-bordered {
+		border: none;
 	}
 	.c-currency__value {
 		font-size: 18px;
 	}
 	.c-currency-list.ant-list-bordered {
 		border-color: #fff;
+		border-radius: 0;
 	}
 	.c-marked-currency.ant-list-bordered {
-		border-color: #CEFF9D;
-	}
-	.c-marked-currency.ant-list-bordered .ant-list-item {
-		border-color: #434343;
-	}
-	.item-marked {
-		background-color: #CEFF9D;
+		border-color: transparent;
 	}
 	.btn-marked {
 		position: relative;
@@ -162,7 +171,7 @@ export default {
 		left: 50%;
 		opacity: 1;
 		transform: translateX(-50%);
-		top: -12px;
+		top: -10px;
 		-webkit-transition: 300ms;
 		-o-transition: 300ms;
 		transition: 300ms;
@@ -171,7 +180,7 @@ export default {
 		transition-timing-function: easy-in-out;
 	}
 	.btn-marked:hover i {
-		top: 7px;
+		top: 9px;
 	}
 	.btn-marked:hover i:after {
 		top: 0;
