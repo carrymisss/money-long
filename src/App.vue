@@ -41,7 +41,7 @@ export default {
       height: 100%;
       overflow-y: auto;
 		max-width: 1140px;
-      /* min-width: 1140px; */
+      min-width: 1140px;
 		margin-left: auto !important;
 		margin-right: auto !important;
 		margin-top: 24px;
