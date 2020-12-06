@@ -9,14 +9,14 @@
 						</a-radio-group>
 					</a-menu-item>
 				</a-menu>
-				<a-button size="large" :loading="this.$store.state.loading">Базова валюта <a-icon type="down" /></a-button>
+				<a-button size="large" :loading="this.$store.state.loading">{{ $t('list.baseCurrency') }} <a-icon type="down" /></a-button>
 			</a-dropdown>
 
 			<a-dropdown :trigger="['click']" v-model="visible" @visibleChange="visibleChange">
-				<a-button size="large" class="ant-dropdown-link" :loading="this.$store.state.loading">Вибрані валюти <a-icon type="down" /></a-button>
+				<a-button size="large" class="ant-dropdown-link" :loading="this.$store.state.loading">{{ $t('list.pickedCurrency') }} <a-icon type="down" /></a-button>
 				<a-menu slot="overlay">
 					<a-menu-item key="1">
-						<a-select mode="multiple" :defaultValue="selected" style="width: 220px" @change="handleChangeAllowed" placeholder="Відображуванні валюти">
+						<a-select mode="multiple" :defaultValue="selected" style="width: 220px" @change="handleChangeAllowed" :placeholder="$t('list.displayedCurrencies')">
 							<a-select-option v-for="item in this.$store.state.allowed_currency" :key="item"
 							>{{ item }}</a-select-option>
 						</a-select>

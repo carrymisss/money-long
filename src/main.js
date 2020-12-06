@@ -7,6 +7,7 @@ import 'ant-design-vue/dist/antd.css'
 
 import store from './store.js'
 import router from './router.js'
+import i18n from './i18n'
 
 Vue.config.productionTip = false
 
@@ -26,5 +27,6 @@ Vue.use(Antd)
 new Vue({
    router,
    store,
-   render: h => h(App),
+   i18n,
+   render: h => h(App)
 }).$mount('#app')

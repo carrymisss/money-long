@@ -9,17 +9,17 @@
 							<a-list-item-meta>
 								<span slot="title">
 									{{ item[0] }}								
-									<a-popover placement="right" :title="new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').slice(1)">
+									<a-popover placement="right" :title="new Intl.NumberFormat($t('locale'), { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat($t('locale'), { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').slice(1)">
 										<span slot="content">
-											<b>Валюта в країнах:</b> {{ gac(item[0]) }}<br/>
+											<b>{{ $t('list.currencyInCountries') }}:</b> {{ gac(item[0]) }}<br/>
 										</span>
 										<i class="far fa-question-circle iuiui"></i>
 									</a-popover>
-									<a-badge class="c-base-badge" v-if="item[2]" count="base" />
+									<a-badge class="c-base-badge" v-if="item[2]" :count="$t('base')" />
 								</span>
 								<a-avatar class="flag-avatar" slot="avatar" :src="`./flags/${item[0]}.png`" />
 							</a-list-item-meta>
-							<span class="c-currency__value">{{ new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0] }).format(item[1]) }}</span>
+							<span class="c-currency__value">{{ item[1] }} {{ gfd(item[0]) }}</span>
 						</a-list-item>
 					</a-list>
 				</template>
@@ -31,17 +31,16 @@
 					<a-list-item-meta>
 						<span slot="title">
 							{{ item[0] }}								
-							<a-popover placement="right" :title="new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').slice(1)">
+							<a-popover placement="right" :title="new Intl.NumberFormat($t('locale'), { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat($t('locale'), { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').slice(1)">
 								<span slot="content">
-									<b>Валюта в країнах:</b> {{ gac(item[0]) }}<br/>
+									<b>{{ $t('list.currencyInCountries') }}:</b> {{ gac(item[0]) }}<br/>
 								</span>
 								<i class="far fa-question-circle iuiui"></i>
 							</a-popover>
-							<a-badge class="c-base-badge" v-if="item[2]" count="base" />
+							<a-badge class="c-base-badge" v-if="item[2]" :count="$t('base')" />
 						</span>
 						<a-avatar class="flag-avatar" slot="avatar" :src="`./flags/${item[0]}.png`" />
 					</a-list-item-meta>
-					<!-- <span class="c-currency__value">{{ new Intl.NumberFormat('en-us', { style: 'currency', currency: item[0], currencyDisplay: 'symbol' }).format(item[1]) }}</span> -->
 					<span class="c-currency__value">{{ item[1] }} {{ gfd(item[0]) }}</span>
 				</a-list-item>
 			</a-list>

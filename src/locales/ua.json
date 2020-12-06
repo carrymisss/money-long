@@ -1,0 +1,16 @@
+{
+  "locale": "uk-UA",
+  "base": "базова",
+  "list": {
+    "mainButton": "Всі валюти",
+    "baseCurrency": "Базова валюта",
+    "pickedCurrency": "Вибрані валюти",
+    "currencyInCountries": "Валюта в країнах",
+    "displayedCurrencies": "Відображуванні валюти"
+  },
+  "converter": {
+    "mainButton": "Конвертер",
+    "value": "Значення",
+    "currency": "Валюта"
+  }
+}

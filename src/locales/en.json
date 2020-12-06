@@ -1,0 +1,16 @@
+{
+  "locale": "en-US",
+  "base": "basic",
+  "list": {
+    "mainButton": "All currencies",
+    "baseCurrency": "Base currency",
+    "pickedCurrency": "Selected currencies",
+    "currencyInCountries": "Currencies in countries",
+    "displayedCurrencies": "Displayed currencies"
+  },
+  "converter": {
+    "mainButton": "Converter",
+    "value": "Value",
+    "currency": "Currency"
+  }
+}

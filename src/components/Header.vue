@@ -12,8 +12,19 @@
 						<Configuration />
 					</a-col>
 				</a-space>
-				<a-col class="d-flex">
-					<a-avatar shape="square" size="large" icon="user" />
+				<a-col>
+					<a-space style="display: flex; align-items: center;">
+						<a-button @click="onChangeLanguage()" size="small">
+							{{ this.$i18n.locale === 'ua' ? 'English' : 'Українська' }}
+						</a-button>
+						<a-spin :spinning="userLoading">
+							<div class="spin-content">
+								<a :href="userUrl" target="_blank">
+									<a-avatar shape="square" size="large" icon="user" :src="userAvatar" />
+								</a>
+							</div>
+						</a-spin>
+					</a-space>
 				</a-col>
 			</a-row>
 		</div>
@@ -23,6 +34,8 @@
 <script>
 import Configuration from './Configuration.vue'
 import { mapGetters } from 'vuex'
+import { Octokit } from '@octokit/core'
+import { message } from 'ant-design-vue'
 
 export default {
 	data() {
@@ -30,23 +43,50 @@ export default {
 			btnHeaderText: null,
 			btnHeaderIcon: '',
 			btnHeaderColor: 'default',
+			locales: process.env.VUE_APP_I18N_SUPPORTED_LOCALES.split(','),
+			userAvatar: null,
+			userLoading: true,
+			userUrl: '#'
 		}
+	},
+	beforeMount() {
+		const octokit = new Octokit({ auth: process.env.VUE_APP_PERSONAL_ACCESS_TOKEN_GITHUB });
+		octokit.request('GET /user').then(({ data }) => {
+			this.userAvatar = data.avatar_url
+			this.userUrl = data.html_url + '/money-long'
+			this.userLoading = false
+		}).catch(err => {
+			message.error(''+err)
+		})
 	},
 	computed: {
 		...mapGetters(['getLoading']),
 	},
 	updated() {
 		if (this.$route.path === '/') {
-			this.btnHeaderText = 'Всі валюти'
+			this.btnHeaderText = this.$t('list.mainButton')
 			this.btnHeaderIcon = 'unordered-list'
 			this.btnHeaderColor = 'primary'
 		} else {
-			this.btnHeaderText = 'Конвертер'
+			this.btnHeaderText = this.$t('converter.mainButton')
 			this.btnHeaderIcon = 'dollar'
 			this.btnHeaderColor = 'danger'
 		}
 	},
 	methods: {
+		onChangeLanguage() {
+			if (this.$i18n.locale === 'ua') {
+				this.$i18n.locale = 'en'
+				if (!localStorage.getItem('locale')) {
+					localStorage.setItem('locale', 'en')
+				} else localStorage.setItem('locale', 'en')
+			} else {
+				this.$i18n.locale = 'ua'
+				if (!localStorage.getItem('locale')) {
+					localStorage.setItem('locale', 'ua')
+				} else localStorage.setItem('locale', 'ua')
+			}
+		},
 		toPath() {
 			if (this.$route.path === '/') {
 				this.$router.push({ path: '/convert' })

@@ -7,18 +7,18 @@
 				</span>
 				<a-row :gutter="[32,24]" type="flex" justify="space-between">
 					<a-col span="11">
-						<a-input-number :formatter="value => value && code1 ? `${gs(code1)} ${value}` : null" :parser="value => value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" placeholder="Значення" style="width: 100%;" id="number1" v-model="number1" :min="0" @change="onChangeNumber1" :disabled="this.$store.state.loading || disable || !(code1 && code2)"/>
+						<a-input-number :formatter="value => value && code1 ? `${gs(code1)} ${value}` : null" :parser="value => value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" :placeholder="$t('converter.value')" style="width: 100%;" id="number1" v-model="number1" :min="0" @change="onChangeNumber1" :disabled="this.$store.state.loading || disable || !(code1 && code2)"/>
 					</a-col>
 					<a-col span="11">
-						<a-input-number :formatter="value => value && code2 ? `${gs(code2)} ${value}` : null" :parser="value => value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" placeholder="Значення" style="width: 100%;" id="number2" v-model="number2" :min="0" @change="onChangeNumber2" :disabled="this.$store.state.loading || disable || !(code2 && code1)"/>
+						<a-input-number :formatter="value => value && code2 ? `${gs(code2)} ${value}` : null" :parser="value => value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1')" :placeholder="$t('converter.value')" style="width: 100%;" id="number2" v-model="number2" :min="0" @change="onChangeNumber2" :disabled="this.$store.state.loading || disable || !(code2 && code1)"/>
 					</a-col>
 					<a-col span="11">
-						<a-select placeholder="Валюта" style="width: 100%;" id="valute1" @change="onChangeValute1" show-search option-filter-prop="children" :disable="this.$store.state.loading || disable">
+						<a-select :placeholder="$t('converter.currency')" style="width: 100%;" id="valute1" @change="onChangeValute1" show-search option-filter-prop="children" :disable="this.$store.state.loading || disable">
 							<a-select-option v-for="item in j" :key="item[0]">{{ item[0] }}</a-select-option>
 						</a-select>
 					</a-col>
 					<a-col span="11">
-						<a-select placeholder="Валюта" style="width: 100%;" id="valute2" @change="onChangeValute2" show-search option-filter-prop="children" :disable="this.$store.state.loading || disable">
+						<a-select :placeholder="$t('converter.currency')" style="width: 100%;" id="valute2" @change="onChangeValute2" show-search option-filter-prop="children" :disable="this.$store.state.loading || disable">
 							<a-select-option v-for="item in jj" :key="item[0]">{{ item[0] }}</a-select-option>
 						</a-select>
 					</a-col>
@@ -81,7 +81,7 @@ export default {
 			this.valute2 = this.$store.state.currency.concat(this.$store.state.markered).filter(el => el[0] !== value)
 			this.code1 = value
 			this.disable = true
-			axios.get(`https://v6.exchangerate-api.com/v6/438e94c48003b424294be18f/latest/${value}`).then(({ data }) => {
+			axios.get(`https://v6.exchangerate-api.com/v6/${process.env.VUE_APP_API_CURRENCY_KEY}/latest/${value}`).then(({ data }) => {
 				if (data.result === 'success') {
 					this.haveError = false
 					this.valute1_rates = Object.assign(data.conversion_rates)
@@ -106,7 +106,7 @@ export default {
 			this.valute1 = this.$store.state.currency.concat(this.$store.state.markered).filter(el => el[0] !== value)
 			this.code2 = value
 			this.disable = true
-			axios.get(`https://v6.exchangerate-api.com/v6/438e94c48003b424294be18f/latest/${value}`).then(({ data }) => {
+			axios.get(`https://v6.exchangerate-api.com/v6/${process.env.VUE_APP_API_CURRENCY_KEY}/latest/${value}`).then(({ data }) => {
 				if (data.result === 'success') {
 					this.haveError = false
 					this.valute2_rates = Object.assign(data.conversion_rates)
