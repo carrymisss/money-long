@@ -60,33 +60,37 @@ export default new Vuex.Store({
       }
    },
    actions: {
-      applyCurrency({ commit, state, dispatch }) {
+      applyCurrency({ commit, state }) {
          const key = '438e94c48003b424294be18f'
-         axios.get(`https://prime.exchangerate-api.com/v5/${key}/latest/${state.base_currency}`).then(({ data }) => {
-            const sorter = (el) => {
-               if (el[0] === state.base_currency) {
-                  return el.push('isBase')
-               }
-               for (var i = 0; i < state.selected_currency.concat(state.can_be_base).length; i++) {
-                  if (el[0] === state.selected_currency.concat(state.can_be_base)[i]) {
-                     return el
+         axios.get(`https://v6.exchangerate-api.com/v6/${key}/latest/${state.base_currency}`).then(({ data }) => {
+            if(data.result === 'success') {
+               const sorter = (el) => {
+                  if (el[0] === state.base_currency) {
+                     return el.push('isBase')
+                  }
+                  for (var i = 0; i < state.selected_currency.concat(state.can_be_base).length; i++) {
+                     if (el[0] === state.selected_currency.concat(state.can_be_base)[i]) {
+                        return el
+                     }
                   }
                }
-            }
-            commit('setAllowed', Object.entries(data.conversion_rates).filter(el => el[0] !== 'USD' && el[0] !== 'EUR'))
-            commit('setCurrency', Object.entries(data.conversion_rates).filter(sorter))
-            let old_markered = state.markered
-            commit('clearMarkered')
-            old_markered.forEach(el => {
-               state.currency.forEach(i => {
-                  if (el[0] === i[0]) {
-                     commit('setMarkered', el[0])
-                  }
+               commit('setAllowed', Object.entries(data.conversion_rates).filter(el => el[0] !== 'USD' && el[0] !== 'EUR'))
+               commit('setCurrency', Object.entries(data.conversion_rates).filter(sorter))
+               let old_markered = state.markered
+               commit('clearMarkered')
+               old_markered.forEach(el => {
+                  state.currency.forEach(i => {
+                     if (el[0] === i[0]) {
+                        commit('setMarkered', el[0])
+                     }
+                  })
                })
-            })
-            // localStorage.clear()
-            // dispatch('applyStorage')
-            commit('loadingStatus', false)
+               // localStorage.clear()
+               // dispatch('applyStorage')
+               commit('loadingStatus', false)
+            } else {
+               message.error('Error' + data.error-type && data.error-type)
+            }
          }).catch(error => {
             message.error(''+error)
          })
@@ -101,7 +105,7 @@ export default new Vuex.Store({
       // },
       // setFromStorage({ commit, state }) {
       //    const key = '438e94c48003b424294be18f'
-      //    axios.get(`https://prime.exchangerate-api.com/v5/${key}/latest/${localStorage.getItem('base_currency')}`).then(({ data }) => {
+      //    axios.get(`https://v6.exchangerate-api.com/v6/${key}/latest/${localStorage.getItem('base_currency')}`).then(({ data }) => {
       //       const sorter = (el) => {
       //          if (el[0] === localStorage.getItem('base_currency')) {
       //             return el.push('isBase')

@@ -9,7 +9,7 @@
 							<a-list-item-meta>
 								<span slot="title">
 									{{ item[0] }}								
-									<a-popover placement="right" :title="new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name' }).format(item[1]).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name' }).format(item[1]).split(' ').slice(1).join(' ').slice(1)">
+									<a-popover placement="right" :title="new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').slice(1)">
 										<span slot="content">
 											<b>Валюта в країнах:</b> {{ gac(item[0]) }}<br/>
 										</span>
@@ -27,11 +27,11 @@
 
 			<a-list v-if="getCurrencyLength > 0" class="c-currency-list" itemLayout="horizontal" :dataSource="getCurrency" bordered :loading="getLoading">
 				<a-list-item slot="renderItem" slot-scope="item" >
-					<a-button @click="MarkCurrency(item[0])" slot="actions" type="danger" shape="circle" class="btn-notmarked"><i class="fas fa-bookmark"></i></a-button>
+					<a-button @click="markCurrency(item[0])" slot="actions" type="danger" shape="circle" class="btn-notmarked"><i class="fas fa-bookmark"></i></a-button>
 					<a-list-item-meta>
 						<span slot="title">
 							{{ item[0] }}								
-							<a-popover placement="right" :title="new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name' }).format(item[1]).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name' }).format(item[1]).split(' ').slice(1).join(' ').slice(1)">
+							<a-popover placement="right" :title="new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').charAt(0).toUpperCase() + new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0], currencyDisplay: 'name', minimumFractionDigits: 0 }).format(1).split(' ').slice(1).join(' ').slice(1)">
 								<span slot="content">
 									<b>Валюта в країнах:</b> {{ gac(item[0]) }}<br/>
 								</span>
@@ -41,7 +41,8 @@
 						</span>
 						<a-avatar class="flag-avatar" slot="avatar" :src="`./flags/${item[0]}.png`" />
 					</a-list-item-meta>
-					<span class="c-currency__value">{{ new Intl.NumberFormat('ua-UK', { style: 'currency', currency: item[0] }).format(item[1]) }}</span>
+					<!-- <span class="c-currency__value">{{ new Intl.NumberFormat('en-us', { style: 'currency', currency: item[0], currencyDisplay: 'symbol' }).format(item[1]) }}</span> -->
+					<span class="c-currency__value">{{ item[1] }} {{ gfd(item[0]) }}</span>
 				</a-list-item>
 			</a-list>
 		</a-col>
@@ -49,9 +50,9 @@
 </template>
 
 <script>
-import { List, Row, Col, Button, Popover, Divider, Alert } from 'ant-design-vue'
 import { mapGetters } from 'vuex'
 import { getAllCountriesByCurrencyOrSymbol } from 'iso-country-currency'
+import getSymbolFromCurrency from 'currency-symbol-map'
 
 /* eslint-disable */
 
@@ -60,18 +61,18 @@ export default {
 		...mapGetters(['getCurrency', 'getMarkered', 'getLoading', 'getMarkeredLength', 'getCurrencyLength']),
 	},
 	methods: {
+		gfd(val) {
+			return getSymbolFromCurrency(val)
+		},
 		gac(code) {
 			return getAllCountriesByCurrencyOrSymbol('currency', code).join(', ')
 		},
-		MarkCurrency(index) {
+		markCurrency(index) {
 			this.$store.commit('setMarkered', index)
 		},
 		unMarkCurrency(index) {
 			this.$store.commit('setUnMarkered', index)
 		}
-	},
-	components: {
-		'a-list': List, 'a-row': Row, 'a-col': Col, 'a-button': Button, 'a-popover': Popover, 'a-divider': Divider, 'a-alert': Alert
 	}
 }
 </script>

@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import { Button, Row, Col, Space } from 'ant-design-vue'
 import Configuration from './Configuration.vue'
 import { mapGetters } from 'vuex'
 
@@ -57,8 +56,8 @@ export default {
 		}
 	},
 	components: {
-		'a-button': Button, 'a-row': Row, 'a-col': Col, 'a-space': Space, Configuration
-  }
+		Configuration
+	}
 }
 </script>
 

@@ -28,9 +28,6 @@
 </template>
 
 <script>
-import { Button, Dropdown, Radio, Space } from 'ant-design-vue'
-
-
 export default {
 	data() {
 		return {
@@ -57,10 +54,7 @@ export default {
 				}
 			}
 		},
-    },
-	components: {
-		'a-button': Button, 'a-dropdown': Dropdown, 'a-radio': Radio, 'a-space': Space
-	}
+    }
 }
 </script>
 

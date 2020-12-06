@@ -9,22 +9,11 @@ const routes = [
 		path: '/',
 		name: 'home',
 		component: () => import('./components/AllCurrency.vue'),
-		meta: {
-			PbtnHeaderText: 'Всі валюти',
-			PbtnHeaderIcon: 'project',
-			PbtnHeaderColor: 'danger',
-		}
 	},
 	{
 		path: '/convert',
 		name: 'converter',
 		component: () => import('./components/Converter.vue'),
-		
-		meta: {
-			PbtnHeaderText: 'Конвертер',
-			PbtnHeaderIcon: 'dollar',
-			PbtnHeaderColor: 'primary',
-		}
 	}
 ]
 

@@ -1,9 +1,10 @@
 <template>
    <a-layout class="c-page">
-      <c-header></c-header>
+      <Header />
       <a-layout-content class="c-content">
          <router-view v-transition></router-view>
       </a-layout-content>
+      <a class="api_by" target="_blank" href="https://www.exchangerate-api.com">Currency Conversion by ExchangeRate-API.com</a>
    </a-layout>
 </template>
 
@@ -13,7 +14,7 @@ import Header from './components/Header'
 export default {
    name: 'App',
    components: {
-      'c-header': Header,
+      Header
    },
    beforeMount() {
       // if (localStorage.length <= 1) {
@@ -30,6 +31,7 @@ export default {
    .c-page {
       height: 100vh;
       min-height: 100vh !important;
+      position: relative;
    }
    #vueg-background {
       width: auto !important;
@@ -48,4 +50,16 @@ export default {
 		min-height: 320px;
 		background: #fff;
 	}
+   .api_by {
+      position: absolute;
+      bottom: 24px;
+      right: 0;
+      width: max-content;
+      height: max-content;
+      display: inline-block;
+      font-size: 10px;
+      color: #d3d3d399;
+      padding: 0 5px;
+      background-color: #fff;
+   }
 </style>
