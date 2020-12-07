@@ -11,9 +11,9 @@
 <h1 align="center">money-long</h1>
 
 <p>This is a SPA for converting currencies using the appropriate API.</p>
-<center>
+<p align="center">
     <img width="500" src="https://i.ibb.co/DYMJBRv/image.png">
-</center>
+</p>
 
 You can try this here: [money-long.vercel.app](https://money-long.vercel.app/)
 
