@@ -11,8 +11,11 @@
 <h1 align="center">money-long</h1>
 
 <p>This is a SPA for converting currencies using the appropriate API.</p>
+<center>
+    <img width="500" src="https://prntscr.com/vxs33t">
+</center>
 
-You can try this: [https://money-long.vercel.app/](https://money-long.vercel.app/)
+You can try this here: [money-long.vercel.app](https://money-long.vercel.app/)
 
 Made according to the terms of reference: [Appbooster Frontend Developer test task](https://gist.github.com/KELiON/847543083fa37585dd06be197a405ec7)
 
