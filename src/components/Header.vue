@@ -21,11 +21,11 @@
 							<template slot="title">
 							<span>GitHub @carrymisss / money-long</span>
 							</template>
-							<a-button size="small">
-								<a href="https://github.com/carrymisss/money-long" target="_blank">
+							<a href="https://github.com/carrymisss/money-long" target="_blank">
+								<a-button size="small">
 									<i class="fab fa-github"></i>
-								</a>
-							</a-button>
+								</a-button>
+							</a>
 						</a-tooltip>
 					</a-space>
 				</a-col>
