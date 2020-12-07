@@ -5,7 +5,7 @@
     "mainButton": "All currencies",
     "baseCurrency": "Base currency",
     "pickedCurrency": "Selected currencies",
-    "currencyInCountries": "Currencies in countries",
+    "currencyInCountries": "Currency in countries",
     "displayedCurrencies": "Displayed currencies"
   },
   "converter": {

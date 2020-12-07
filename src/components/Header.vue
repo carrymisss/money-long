@@ -19,9 +19,14 @@
 						</a-button>
 						<a-spin :spinning="userLoading">
 							<div class="spin-content">
-								<a :href="userUrl" target="_blank">
-									<a-avatar shape="square" size="large" icon="user" :src="userAvatar" />
-								</a>
+								<a-tooltip placement="bottomRight">
+									<template slot="title">
+									<span>GitHub @{{ userLogin }} / money-long</span>
+									</template>
+									<a :href="userUrl" target="_blank">
+										<a-avatar shape="square" size="large" icon="user" :src="userAvatar" />
+									</a>
+								</a-tooltip>
 							</div>
 						</a-spin>
 					</a-space>
@@ -46,15 +51,18 @@ export default {
 			locales: process.env.VUE_APP_I18N_SUPPORTED_LOCALES.split(','),
 			userAvatar: null,
 			userLoading: true,
-			userUrl: '#'
+			userUrl: '#',
+			userLogin: ''
 		}
 	},
 	beforeMount() {
 		const octokit = new Octokit({ auth: process.env.VUE_APP_PERSONAL_ACCESS_TOKEN_GITHUB });
 		octokit.request('GET /user').then(({ data }) => {
+			console.log(data);
 			this.userAvatar = data.avatar_url
 			this.userUrl = data.html_url + '/money-long'
 			this.userLoading = false
+			this.userLogin = data.login
 		}).catch(err => {
 			message.error(''+err)
 		})
@@ -111,7 +119,6 @@ export default {
 		background-color: #fff;
 	}
 	.c-header__wrapper {
-		padding: 0 15px;
 		width: 100%;
 		max-width: 1140px;
 		/* min-width: 1140px; */

@@ -34,6 +34,7 @@ export default {
       height: 100vh;
       min-height: 100vh !important;
       position: relative;
+      min-width: 1140px;
    }
    #vueg-background {
       width: auto !important;
