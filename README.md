@@ -12,6 +12,10 @@
 
 <p>This is a SPA for converting currencies using the appropriate API.</p>
 
+<p>You can try this: [https://money-long.vercel.app/](https://money-long.vercel.app/)</p> 
+
+<p>made according to the terms of reference: [Appbooster Frontend Developer test task](https://gist.github.com/KELiON/847543083fa37585dd06be197a405ec7)</p>
+
 ### Сreated with:
 - [ant-design-vue](https://www.antdv.com/docs/vue/introduce/)
 - [vue.js](https://vuejs.org/)
