@@ -63,7 +63,7 @@ export default {
       transform: translateX(-50%);
       text-align: right;
       width: 1140px;
-      height: max-content;
+      height: 15px;
       display: inline-block;
       font-size: 10px;
       padding: 0 5px;
@@ -72,5 +72,6 @@ export default {
    .api_by a {
       background-color: #fff;
       color: #d3d3d361;
+      height: 15px;
    }
 </style>
