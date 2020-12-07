@@ -17,18 +17,16 @@
 						<a-button @click="onChangeLanguage()" size="small">
 							{{ this.$i18n.locale === 'ua' ? 'English' : 'Українська' }}
 						</a-button>
-						<a-spin :spinning="userLoading">
-							<div class="spin-content">
-								<a-tooltip placement="bottomRight">
-									<template slot="title">
-									<span>GitHub @{{ userLogin }} / money-long</span>
-									</template>
-									<a :href="userUrl" target="_blank">
-										<a-avatar shape="square" size="large" icon="user" :src="userAvatar" />
-									</a>
-								</a-tooltip>
-							</div>
-						</a-spin>
+						<a-tooltip placement="bottomRight">
+							<template slot="title">
+							<span>GitHub @carrymisss / money-long</span>
+							</template>
+							<a-button size="small">
+								<a href="https://github.com/carrymisss/money-long" target="_blank">
+									<i class="fab fa-github"></i>
+								</a>
+							</a-button>
+						</a-tooltip>
 					</a-space>
 				</a-col>
 			</a-row>
@@ -39,8 +37,8 @@
 <script>
 import Configuration from './Configuration.vue'
 import { mapGetters } from 'vuex'
-import { Octokit } from '@octokit/core'
-import { message } from 'ant-design-vue'
+// import { Octokit } from '@octokit/core'
+// import { message } from 'ant-design-vue'
 
 export default {
 	data() {
@@ -49,24 +47,20 @@ export default {
 			btnHeaderIcon: '',
 			btnHeaderColor: 'default',
 			locales: process.env.VUE_APP_I18N_SUPPORTED_LOCALES.split(','),
-			userAvatar: null,
-			userLoading: true,
-			userUrl: '#',
-			userLogin: ''
 		}
 	},
-	beforeMount() {
-		const octokit = new Octokit({ auth: process.env.VUE_APP_PERSONAL_ACCESS_TOKEN_GITHUB });
-		octokit.request('GET /user').then(({ data }) => {
-			console.log(data);
-			this.userAvatar = data.avatar_url
-			this.userUrl = data.html_url + '/money-long'
-			this.userLoading = false
-			this.userLogin = data.login
-		}).catch(err => {
-			message.error(''+err)
-		})
-	},
+	// beforeMount() {
+		// const octokit = new Octokit({ auth: process.env.VUE_APP_PERSONAL_ACCESS_TOKEN_GITHUB });
+		// octokit.request('GET /user').then(({ data }) => {
+		// 	console.log(data);
+		// 	this.userAvatar = data.avatar_url
+		// 	this.userUrl = data.html_url + '/money-long'
+		// 	this.userLoading = false
+		// 	this.userLogin = data.login
+		// }).catch(err => {
+		// 	message.error(''+err)
+		// })
+	// },
 	computed: {
 		...mapGetters(['getLoading']),
 	},
