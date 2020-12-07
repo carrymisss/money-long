@@ -75,4 +75,7 @@ export default {
       background-color: #fff;
       color: #d3d3d361;
    }
+   .api_by a:hover {
+      color: #1890ff;
+   }
 </style>
