@@ -12,7 +12,7 @@
 
 <p>This is a SPA for converting currencies using the appropriate API.</p>
 <p align="center">
-    <img width="500" src="https://i.ibb.co/DYMJBRv/image.png">
+    <img width="500" src="https://i.ibb.co/fDT5RK6/2021-01-08-00-56-33.png">
 </p>
 
 You can try this here: [money-long.vercel.app](https://money-long.vercel.app/)
